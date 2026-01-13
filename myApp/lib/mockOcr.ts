@@ -62,3 +62,38 @@ export const simulateOcrProcessing = (): Promise<OcrResult> => {
     }, 2500); // 2.5 second delay
   });
 };
+
+// ============================================
+// AI RECIPES DATA
+// TODO: Replace mock data with BE API response
+// ============================================
+
+export interface Recipe {
+  id: string;
+  name: string;
+  rating: number;
+  reviewCount: number;
+  cookTime: number;
+  chef: string;
+  imageUrl: string;
+  isAIGenerated: boolean;
+}
+
+/**
+ * Get AI-generated recipes based on fridge inventory
+ */
+export const getAIRecipes = (): Recipe[] => {
+  return [
+    {
+      id: 'recipe_001',
+      name: 'Sandwich',
+      rating: 4.8,
+      reviewCount: 500,
+      cookTime: 15,
+      chef: 'Chef Hoang Dieu',
+      imageUrl: 'https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=400&h=300&fit=crop',
+      isAIGenerated: true,
+    },
+  ];
+};
+

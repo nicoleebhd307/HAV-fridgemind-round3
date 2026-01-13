@@ -20,6 +20,8 @@ const MAPPING = {
   'chevron.right': 'chevron-right',
   'camera.fill': 'camera-alt',
   'refrigerator.fill': 'kitchen',
+  'chart.bar.fill': 'bar-chart',
+  'person.fill': 'person',
 } as IconMapping;
 
 /**
