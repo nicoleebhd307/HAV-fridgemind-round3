@@ -1,0 +1,155 @@
+{
+  "default_category": "Pantry",
+  "categories": [
+    {
+      "name": "Vegetables",
+      "default_food_type": "fresh_veg",
+      "keywords": [
+        "rau",
+        "cai",
+        "cải",
+        "xalach",
+        "xa lach",
+        "carrot",
+        "ca rot",
+        "dua leo",
+        "dưa leo",
+        "onion",
+        "hanh",
+        "hành"
+      ]
+    },
+    {
+      "name": "Fruits",
+      "default_food_type": "fresh_fruit",
+      "keywords": [
+        "tao",
+        "táo",
+        "apple",
+        "chuoi",
+        "chuối",
+        "banana",
+        "cam",
+        "orange",
+        "nho",
+        "grape",
+        "dua hau",
+        "dưa hấu",
+        "xoai",
+        "xoài"
+      ]
+    },
+    {
+      "name": "Meat",
+      "default_food_type": "raw_meat",
+      "keywords": [
+        "thit",
+        "thịt",
+        "heo",
+        "lon",
+        "pork",
+        "bo",
+        "bò",
+        "beef",
+        "ga",
+        "gà",
+        "chicken",
+        "vit",
+        "vịt"
+      ]
+    },
+    {
+      "name": "Seafood",
+      "default_food_type": "raw_seafood",
+      "keywords": [
+        "ca",
+        "cá",
+        "tom",
+        "tôm",
+        "muc",
+        "mực",
+        "fish",
+        "shrimp",
+        "squid",
+        "salmon"
+      ]
+    },
+    {
+      "name": "Dairy",
+      "default_food_type": "milk_opened",
+      "keywords": [
+        "sua",
+        "sữa",
+        "milk",
+        "yogurt",
+        "yoghurt",
+        "cheese",
+        "pho mai",
+        "phô mai",
+        "butter",
+        "kem"
+      ]
+    },
+    {
+      "name": "Eggs",
+      "default_food_type": "eggs",
+      "keywords": [
+        "trung",
+        "trứng",
+        "egg"
+      ]
+    },
+    {
+      "name": "Bakery",
+      "default_food_type": "bread_pastry",
+      "keywords": [
+        "banh",
+        "bánh",
+        "bread",
+        "cake"
+      ]
+    },
+    {
+      "name": "Frozen",
+      "default_food_type": "frozen_general",
+      "keywords": [
+        "dong lanh",
+        "đông lạnh",
+        "frozen"
+      ]
+    },
+    {
+      "name": "Ready-to-eat",
+      "default_food_type": "cooked_leftovers",
+      "keywords": [
+        "com",
+        "cơm",
+        "do an",
+        "đồ ăn",
+        "cooked",
+        "ready"
+      ]
+    },
+    {
+      "name": "Pantry",
+      "default_food_type": "pantry_dry",
+      "keywords": [
+        "mi",
+        "mì",
+        "gao",
+        "gạo",
+        "rice",
+        "noodle",
+        "canned",
+        "hop",
+        "hộp",
+        "tuong",
+        "tương",
+        "nuoc mam",
+        "nước mắm",
+        "salt",
+        "sugar"
+      ]
+    }
+  ]
+}

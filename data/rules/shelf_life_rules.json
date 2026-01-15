@@ -1,0 +1,35 @@
+{
+  "default_days": 7,
+  "level_thresholds": {
+    "eat_now_ratio": 0.8,
+    "use_soon_ratio": 0.5
+  },
+  "food_type_days": {
+    "leafy_greens": 3,
+    "fresh_veg": 7,
+    "fresh_fruit": 7,
+    "berries_cut_fruit": 3,
+    "raw_meat": 3,
+    "raw_seafood": 2,
+    "milk_opened": 5,
+    "yogurt_cheese": 10,
+    "eggs": 21,
+    "bread_pastry": 4,
+    "cooked_leftovers": 3,
+    "pantry_dry": 180,
+    "canned": 365,
+    "frozen_general": 90
+  },
+  "category_default_food_type": {
+    "Vegetables": "fresh_veg",
+    "Fruits": "fresh_fruit",
+    "Meat": "raw_meat",
+    "Seafood": "raw_seafood",
+    "Dairy": "milk_opened",
+    "Eggs": "eggs",
+    "Bakery": "bread_pastry",
+    "Frozen": "frozen_general",
+    "Ready-to-eat": "cooked_leftovers",
+    "Pantry": "pantry_dry"
+  }
+}
