@@ -2,6 +2,8 @@ from __future__ import annotations
 import os
 from pathlib import Path
 
+from dotenv import load_dotenv
+
 def _bool(v: str | None, default: bool = False) -> bool:
     if v is None:
         return default
@@ -9,6 +11,12 @@ def _bool(v: str | None, default: bool = False) -> bool:
 
 class Settings:
     ROOT_DIR: Path = Path(__file__).resolve().parents[4]
+
+    # Load .env from project root (safe if file doesn't exist)
+    _ENV_PATH: Path = ROOT_DIR / ".env"
+    if _ENV_PATH.exists():
+        load_dotenv(_ENV_PATH, override=False)
+
     DEMO_USER_ID: str = os.getenv("DEMO_USER_ID", "demo_user")
     DEMO_FRIDGE_ID: str = os.getenv("DEMO_FRIDGE_ID", "demo_fridge")
     DB_PATH: Path = ROOT_DIR / os.getenv("DB_PATH", "data/app.db")
@@ -23,5 +31,9 @@ class Settings:
     PADDLE_OCR_LANG: str = os.getenv("PADDLE_OCR_LANG", "en")
     PADDLE_OCR_USE_ANGLE_CLS: bool = _bool(os.getenv("PADDLE_OCR_USE_ANGLE_CLS"), True)
     PADDLE_OCR_CPU_THREADS: int = int(os.getenv("PADDLE_OCR_CPU_THREADS", "4"))
+
+     # ✅ MongoDB
+    MONGODB_URL: str | None = os.getenv("MONGODB_URL")
+    MONGODB_DB: str = os.getenv("MONGODB_DB", "fridgemind2026")
 
 settings = Settings()

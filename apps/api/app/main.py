@@ -9,6 +9,7 @@ from .api.router import api_router
 from .core.config import settings
 from .core.logging import setup_logging
 from .db import init_db
+from .mongo_db import connect as mongo_connect, close as mongo_close, init_db as mongo_init_db
 
 setup_logging()
 log = logging.getLogger(__name__)
@@ -16,10 +17,13 @@ log = logging.getLogger(__name__)
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # Startup
-    init_db()
-    log.info("DB initialized")
+    # init_db()
+    await mongo_connect()
+    await mongo_init_db()
+    log.info("MongoDB initialized")
     yield
     # Shutdown (if needed)
+    await mongo_close()
 
 app = FastAPI(title="FridgeMind Demo API", version="0.3.0", lifespan=lifespan)
 
