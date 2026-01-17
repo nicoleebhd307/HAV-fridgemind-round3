@@ -9,4 +9,5 @@ numpy>=1.24
 # paddlepaddle
 motor>=3.4.0
 python-dotenv>=1.0.1
-motor
+beanie>=1.25.0
+pymongo>=4.6.0

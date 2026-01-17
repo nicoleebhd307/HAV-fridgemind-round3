@@ -3,18 +3,26 @@ from __future__ import annotations
 from typing import Any, Iterable
 from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorDatabase
 from pymongo import ASCENDING
+from pymongo.errors import OperationFailure
 from bson import ObjectId
+import logging
 
 from .core.config import settings
+from beanie import init_beanie
+
+from .models.receipts import Receipt
+from .models.inventory_item import InventoryItem
+
+log = logging.getLogger(__name__)
 
 _client: AsyncIOMotorClient | None = None
 _db: AsyncIOMotorDatabase | None = None
 
 # --- connection lifecycle ---
 
-async def connect() -> None:
-    """Create Mongo client + db handle (call on FastAPI startup)."""
-    global _client, _db
+async def connect_and_init() -> None:
+    global _client
+    global _db
     if _client is not None:
         return
 
@@ -22,10 +30,24 @@ async def connect() -> None:
         raise RuntimeError("MONGODB_URL is not set in .env")
 
     _client = AsyncIOMotorClient(settings.MONGODB_URL)
-    _db = _client[settings.MONGODB_DB]
+    db = _client[settings.MONGODB_DB]
+    _db = db
 
     # fail fast
     await _client.admin.command("ping")
+
+    # ✅ Beanie creates indexes declared in your Document.Settings.indexes
+    try:
+        await init_beanie(database=db, document_models=[Receipt, InventoryItem])
+    except OperationFailure as exc:
+        # Handle known case where an index exists with the same keys but a different name.
+        # Retry once allowing index dropping so Beanie can reconcile index options.
+        errmsg = str(exc)
+        if "Index already exists with a different name" in errmsg or getattr(exc, "code", None) == 85:
+            log.warning("Index conflict during Beanie init: %s. Retrying with allow_index_dropping=True", errmsg)
+            await init_beanie(database=db, document_models=[Receipt, InventoryItem], allow_index_dropping=True)
+        else:
+            raise
 
 
 async def close() -> None:
@@ -46,25 +68,25 @@ def get_db() -> AsyncIOMotorDatabase:
 
 # --- init (collections + indexes) ---
 
-async def init_db() -> None:
-    """
-    Mongo doesn't need tables. We create indexes to match SQLite indexes.
-    Call this once on startup after connect().
-    """
-    db = get_db()
+# async def init_db() -> None:
+#     """
+#     Mongo doesn't need tables. We create indexes to match SQLite indexes.
+#     Call this once on startup after connect().
+#     """
+#     db = get_db()
 
-    # receipts indexes
-    await db["receipts"].create_index([("user_id", ASCENDING)])
-    await db["receipts"].create_index([("created_at", ASCENDING)])
+#     # receipts indexes
+#     await db["receipts"].create_index([("user_id", ASCENDING)])
+#     await db["receipts"].create_index([("created_at", ASCENDING)])
 
-    # inventory_items indexes
-    await db["inventory_items"].create_index([("user_id", ASCENDING)])
-    await db["inventory_items"].create_index([("fridge_id", ASCENDING)])
-    await db["inventory_items"].create_index([("receipt_id", ASCENDING)])
+#     # inventory_items indexes
+#     await db["inventory_items"].create_index([("user_id", ASCENDING)])
+#     await db["inventory_items"].create_index([("fridge_id", ASCENDING)])
+#     await db["inventory_items"].create_index([("receipt_id", ASCENDING)])
 
-    # todos indexes
-    await db["todos"].create_index([("user_id", ASCENDING)])
-    await db["todos"].create_index([("created_at", ASCENDING)])
+#     # todos indexes
+#     await db["todos"].create_index([("user_id", ASCENDING)])
+#     await db["todos"].create_index([("created_at", ASCENDING)])
 
 
 # --- helpers: id conversion ---
